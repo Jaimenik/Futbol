@@ -125,6 +125,8 @@ Object oWebApp is a cWebApp
     
     Use SelectLiga.wo
     Use ZoomLiga.wo
+    Use SelectPosicion.wo
+    Use ZoomPosicion.wo
 
     Use Dashboard.wo
     Set phoDefaultView to oDashboard
