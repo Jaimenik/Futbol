@@ -1,0 +1,139 @@
+﻿Use cWebView.pkg
+Use cWebPanel.pkg
+Use cWebForm.pkg
+Use cWebMenuGroup.pkg
+Use cWebMenuItem.pkg
+
+Use cLigaDataDictionary.dd
+Use cEquipoDataDictionary.dd
+Use cEntrenadorDataDictionary.dd
+
+Register_Object oSelectEquipo
+
+Object oZoomEntrenador is a cWebView
+    Set psCaption to "Entrenador"
+    Set pbShowCaption to False
+    Set piMaxWidth to 1024
+    Set peViewType to vtZoom
+    Set Verify_Save_msg to 0
+    Set psStateViewName to "Entrenador"
+
+    Object oLiga_DD is a cLigaDataDictionary
+    End_Object
+
+    Object oEquipo_DD is a cEquipoDataDictionary
+        Set DDO_Server to oLiga_DD
+    End_Object
+
+    Object oEntrenador_DD is a cEntrenadorDataDictionary
+        Set DDO_Server to oEquipo_DD
+    End_Object
+
+    Set Main_DD to oEntrenador_DD
+    Set Server  to oEntrenador_DD
+
+    Object oWebMainPanel is a cWebPanel
+        WebSetResponsive piColumnCount rmMobile to 6
+        Set piColumnCount to 12
+
+        Object oEntrenadorNombre is a cWebForm
+            Entry_Item Entrenador.Nombre
+            Set piColumnSpan to 6
+            Set psLabel to "Nombre"
+            Set peLabelPosition to lpTop
+        End_Object
+
+        Object oEntrenadorApellido is a cWebForm
+            Entry_Item Entrenador.Apellido
+            Set piColumnSpan to 6
+            Set psLabel to "Apellido"
+            Set peLabelPosition to lpTop
+        End_Object
+
+        Object oEntrenadorNacionalidad is a cWebForm
+            Entry_Item Entrenador.Nacionalidad
+            Set piColumnSpan to 6
+            Set psLabel to "Nacionalidad"
+            Set peLabelPosition to lpTop
+        End_Object
+
+        Object oEquipoNombre is a cWebForm
+            Entry_Item Equipo.Nombre
+            Set piColumnSpan to 6
+            Set psLabel to "Equipo"
+            Set peLabelPosition to lpTop
+            Set pbPromptButton to True
+
+            WebRegisterPath ntNavigateForward oSelectEquipo Self "ElegirEquipo"
+
+            Procedure OnPrompt
+                Send NavigatePath
+            End_Procedure
+        End_Object
+
+    End_Object
+
+    Procedure SetActionButtons
+        tWebNavigateData NavigateData
+        Boolean bHasRecord
+        Get GetNavigateData to NavigateData
+        Get HasRecord of oEntrenador_DD to bHasRecord
+
+        WebSet pbRender of oEditBtn to NavigateData.bReadOnly
+        WebSet pbRender of oSaveBtn to (not(NavigateData.bReadOnly))
+        WebSet pbRender of oDeleteBtn to bHasRecord
+    End_Procedure
+
+    Object oActionGroup is a cWebMenuGroup
+
+        Object oSaveBtn is a cWebMenuItem
+            Set psCaption to "Guardar"
+            Set psCSSClass to "WebSaveMenuItem"
+
+            Procedure OnClick
+                Send Request_Save
+            End_Procedure
+        End_Object
+
+        Object oEditBtn is a cWebMenuItem
+            Set psCaption to "Editar"
+            Set psCSSClass to "WebEditMenuItem"
+
+            Procedure OnClick
+                Send ChangeEditMode True
+                WebSet pbRender of oEditBtn to False
+                WebSet pbRender of oSaveBtn to True
+            End_Procedure
+        End_Object
+
+        Object oDeleteBtn is a cWebMenuItem
+            Set psCaption to "Eliminar"
+            Set psCSSClass to "WebDeleteMenuItem"
+            Set peActionDisplay to adMenu
+
+            Procedure OnClick
+                Send Request_Delete
+            End_Procedure
+        End_Object
+
+    End_Object
+
+    Procedure OnViewSaved Handle hoServer Boolean bChanged
+        Send NavigateClose Self
+    End_Procedure
+
+    Procedure OnViewDeleted Handle hoServer
+        Send NavigateClose Self
+    End_Procedure
+
+    Procedure OnNavigateForward tWebNavigateData NavigateData Handle hoInvokingView Handle hoInvokingObject
+        If (HasRecord(oEntrenador_DD)) Begin
+            Send SetBreadcrumbCaption (Trim(Entrenador.Nombre))
+        End
+        Else Begin
+            Send SetBreadcrumbCaption "Nuevo entrenador"
+        End
+        Send SetActionButtons
+    End_Procedure
+
+End_Object
