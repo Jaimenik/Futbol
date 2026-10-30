@@ -1,6 +1,72 @@
 <?xml version="1.0"?>
 <DataDictionaryList xmlns="http://www.dataaccess.com/VisualDataFlex/2008/DataDictionaryList/">
   <Tables>
+    <Table xmlns="http://www.dataaccess.com/VisualDataFlex/2008/DataDictionaryList/">
+      <tableNumber>6</tableNumber>
+      <tableName>JugadorPosicion</tableName>
+      <DDClasses>
+        <DDClass>
+          <className>cJugadorPosicionDataDictionary</className>
+          <classFile>cJugadorPosicionDataDictionary.dd</classFile>
+          <preferred>true</preferred>
+        </DDClass>
+      </DDClasses>
+    </Table>
+    <Table xmlns="http://www.dataaccess.com/VisualDataFlex/2008/DataDictionaryList/">
+      <tableNumber>5</tableNumber>
+      <tableName>Jugador</tableName>
+      <DDClasses>
+        <DDClass>
+          <className>cJugadorDataDictionary</className>
+          <classFile>cJugadorDataDictionary.dd</classFile>
+          <preferred>true</preferred>
+        </DDClass>
+      </DDClasses>
+    </Table>
+    <Table xmlns="http://www.dataaccess.com/VisualDataFlex/2008/DataDictionaryList/">
+      <tableNumber>4</tableNumber>
+      <tableName>Entrenador</tableName>
+      <DDClasses>
+        <DDClass>
+          <className>cEntrenadorDataDictionary</className>
+          <classFile>cEntrenadorDataDictionary.dd</classFile>
+          <preferred>true</preferred>
+        </DDClass>
+      </DDClasses>
+    </Table>
+    <Table xmlns="http://www.dataaccess.com/VisualDataFlex/2008/DataDictionaryList/">
+      <tableNumber>3</tableNumber>
+      <tableName>Equipo</tableName>
+      <DDClasses>
+        <DDClass>
+          <className>cEquipoDataDictionary</className>
+          <classFile>cEquipoDataDictionary.dd</classFile>
+          <preferred>true</preferred>
+        </DDClass>
+      </DDClasses>
+    </Table>
+    <Table xmlns="http://www.dataaccess.com/VisualDataFlex/2008/DataDictionaryList/">
+      <tableNumber>2</tableNumber>
+      <tableName>Posicion</tableName>
+      <DDClasses>
+        <DDClass>
+          <className>cPosicionDataDictionary</className>
+          <classFile>cPosicionDataDictionary.dd</classFile>
+          <preferred>true</preferred>
+        </DDClass>
+      </DDClasses>
+    </Table>
+    <Table xmlns="http://www.dataaccess.com/VisualDataFlex/2008/DataDictionaryList/">
+      <tableNumber>1</tableNumber>
+      <tableName>Liga</tableName>
+      <DDClasses>
+        <DDClass>
+          <className>cLigaDataDictionary</className>
+          <classFile>cLigaDataDictionary.dd</classFile>
+          <preferred>true</preferred>
+        </DDClass>
+      </DDClasses>
+    </Table>
     <Table>
       <tableNumber>263</tableNumber>
       <tableName>WebAppSession</tableName>

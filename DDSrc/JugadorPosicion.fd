@@ -1,0 +1,5 @@
+#REPLACE FILE6 JugadorPosicion
+#REPLACE JugadorPosicion.File_Number |CI6
+#REPLACE JugadorPosicion.ID |FN6,1
+#REPLACE JugadorPosicion.JugadorID |FN6,2
+#REPLACE JugadorPosicion.PosicionID |FN6,3

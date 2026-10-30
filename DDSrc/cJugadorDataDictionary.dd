@@ -1,0 +1,51 @@
+﻿Use DataDict.pkg
+
+Open Jugador
+Open Equipo
+Open JugadorPosicion
+
+Class cJugadorDataDictionary is a DataDictionary
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set Main_File to Jugador.File_Number
+        Set Cascade_Delete_State to False
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+        Set Add_Server_File to Equipo.File_Number
+        Set Add_Client_File to JugadorPosicion.File_Number
+
+        // EquipoID admite NULL: puede no tener equipo
+        Set ParentNullAllowed Equipo.File_Number to True
+
+        Set Field_Label_Long Field Jugador.ID to "ID"
+        Set Field_Label_Short Field Jugador.ID to "ID"
+        Set Field_Option Field Jugador.ID DD_AUTOFIND to True
+        Set Field_Option Field Jugador.ID DD_NOPUT to True
+        Set Key_Field_State Field Jugador.ID to True
+        Set Status_Help Field Jugador.ID to "Identificador (lo asigna la base de datos)"
+        Set Field_Label_Long Field Jugador.Nombre to "Nombre"
+        Set Field_Label_Short Field Jugador.Nombre to "Nombre"
+        Set Field_Option Field Jugador.Nombre DD_REQUIRED to True
+
+        Set Field_Label_Long Field Jugador.Apellido to "Apellido"
+        Set Field_Label_Short Field Jugador.Apellido to "Apellido"
+        Set Field_Option Field Jugador.Apellido DD_REQUIRED to True
+
+        Set Field_Label_Long Field Jugador.Nacionalidad to "Nacionalidad"
+        Set Field_Label_Short Field Jugador.Nacionalidad to "Nacionalidad"
+
+        Set Field_Label_Long Field Jugador.EquipoID to "Equipo"
+        Set Field_Label_Short Field Jugador.EquipoID to "Equipo"
+
+        Set piPrimaryIndex to 1
+    End_Procedure
+
+    Procedure Field_Defaults
+        Forward Send Field_Defaults
+    End_Procedure
+
+End_Class
