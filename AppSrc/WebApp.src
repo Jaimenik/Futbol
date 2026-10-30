@@ -129,6 +129,8 @@ Object oWebApp is a cWebApp
     Use ZoomPosicion.wo
     Use SelectEquipo.wo
     Use ZoomEquipo.wo
+    Use SelectEntrenador.wo
+    Use ZoomEntrenador.wo
 
     Use Dashboard.wo
     Set phoDefaultView to oDashboard
