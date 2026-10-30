@@ -1,0 +1,7 @@
+#REPLACE FILE4 Entrenador
+#REPLACE Entrenador.File_Number |CI4
+#REPLACE Entrenador.ID |FN4,1
+#REPLACE Entrenador.Nombre |FS4,2
+#REPLACE Entrenador.Apellido |FS4,3
+#REPLACE Entrenador.Nacionalidad |FS4,4
+#REPLACE Entrenador.EquipoID |FN4,5

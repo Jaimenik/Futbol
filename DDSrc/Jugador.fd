@@ -1,0 +1,7 @@
+#REPLACE FILE5 Jugador
+#REPLACE Jugador.File_Number |CI5
+#REPLACE Jugador.ID |FN5,1
+#REPLACE Jugador.Nombre |FS5,2
+#REPLACE Jugador.Apellido |FS5,3
+#REPLACE Jugador.Nacionalidad |FS5,4
+#REPLACE Jugador.EquipoID |FN5,5

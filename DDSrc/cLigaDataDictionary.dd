@@ -1,0 +1,61 @@
+﻿Use DataDict.pkg
+
+Open Liga
+Open Equipo
+
+Class cLigaDataDictionary is a DataDictionary
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set Main_File to Liga.File_Number
+        Set Cascade_Delete_State to False
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+        Set Add_Client_File to Equipo.File_Number
+
+        Set Field_Label_Long Field Liga.ID to "ID"
+        Set Field_Label_Short Field Liga.ID to "ID"
+        Set Field_Option Field Liga.ID DD_AUTOFIND to True
+        Set Field_Option Field Liga.ID DD_NOPUT to True
+        Set Key_Field_State Field Liga.ID to True
+        Set Status_Help Field Liga.ID to "Identificador (lo asigna la base de datos)"
+        Set Field_Label_Long Field Liga.Nombre to "Nombre"
+        Set Field_Label_Short Field Liga.Nombre to "Nombre"
+        Set Field_Option Field Liga.Nombre DD_REQUIRED to True
+
+        Set Field_Label_Long Field Liga.Pais to "PaÃ­s"
+        Set Field_Label_Short Field Liga.Pais to "PaÃ­s"
+        Set Field_Option Field Liga.Pais DD_REQUIRED to True
+
+        Set Field_Label_Long Field Liga.Equipos to "NÂº de equipos"
+        Set Field_Label_Short Field Liga.Equipos to "Equipos"
+        Set Field_Option Field Liga.Equipos DD_DISPLAYONLY to True
+        Set Status_Help Field Liga.Equipos to "Se calcula solo al aÃ±adir o quitar equipos"
+
+        Set Field_Label_Long Field Liga.EquiposMax to "MÃ¡ximo de equipos"
+        Set Field_Label_Short Field Liga.EquiposMax to "MÃ¡x."
+        Set Field_Value_Range Field Liga.EquiposMax to 1 99
+
+        Set piPrimaryIndex to 1
+    End_Procedure
+
+    Function Validate_Save Returns Integer
+        Integer iRetVal
+        Forward Get Validate_Save to iRetVal
+        If iRetVal Function_Return iRetVal
+
+        If (Liga.EquiposMax < Liga.Equipos) Begin
+            Send UserError "El mÃ¡ximo no puede ser menor que los equipos que ya tiene la liga" ""
+            Function_Return 1
+        End
+    End_Function
+
+    Procedure Field_Defaults
+        Forward Send Field_Defaults
+        Set Field_Changed_Value Field Liga.EquiposMax to 20
+    End_Procedure
+
+End_Class

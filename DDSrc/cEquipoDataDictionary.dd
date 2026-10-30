@@ -1,0 +1,65 @@
+﻿Use DataDict.pkg
+
+Open Equipo
+Open Liga
+Open Entrenador
+Open Jugador
+
+Class cEquipoDataDictionary is a DataDictionary
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set Main_File to Equipo.File_Number
+        Set Cascade_Delete_State to False
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+        Set Add_Server_File to Liga.File_Number
+        Set Add_Client_File to Entrenador.File_Number
+        Set Add_Client_File to Jugador.File_Number
+
+        Set Field_Label_Long Field Equipo.ID to "ID"
+        Set Field_Label_Short Field Equipo.ID to "ID"
+        Set Field_Option Field Equipo.ID DD_AUTOFIND to True
+        Set Field_Option Field Equipo.ID DD_NOPUT to True
+        Set Key_Field_State Field Equipo.ID to True
+        Set Status_Help Field Equipo.ID to "Identificador (lo asigna la base de datos)"
+        Set Field_Label_Long Field Equipo.Nombre to "Nombre"
+        Set Field_Label_Short Field Equipo.Nombre to "Nombre"
+        Set Field_Option Field Equipo.Nombre DD_REQUIRED to True
+
+        Set Field_Label_Long Field Equipo.LigaID to "Liga"
+        Set Field_Label_Short Field Equipo.LigaID to "Liga"
+
+        Set piPrimaryIndex to 1
+    End_Procedure
+
+    // Lleva la cuenta de equipos de la liga
+    Procedure Update
+        Forward Send Update
+        Add 1 to Liga.Equipos
+    End_Procedure
+
+    Procedure Backout
+        Forward Send Backout
+        Subtract 1 from Liga.Equipos
+    End_Procedure
+
+    Function Validate_Save Returns Integer
+        Integer iRetVal
+        Forward Get Validate_Save to iRetVal
+        If iRetVal Function_Return iRetVal
+
+        If (Liga.Equipos > Liga.EquiposMax) Begin
+            Send UserError ("La liga " + Trim(Liga.Nombre) + " ya tiene el mÃ¡ximo de equipos") ""
+            Function_Return 1
+        End
+    End_Function
+
+    Procedure Field_Defaults
+        Forward Send Field_Defaults
+    End_Procedure
+
+End_Class
