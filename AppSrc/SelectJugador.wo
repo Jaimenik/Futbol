@@ -1,0 +1,145 @@
+﻿Use cWebView.pkg
+Use cWebPanel.pkg
+Use cWebList.pkg
+Use cWebColumn.pkg
+Use cWebColumnButton.pkg
+Use cWebMenuGroup.pkg
+Use cWebMenuItem.pkg
+
+Use cLigaDataDictionary.dd
+Use cEquipoDataDictionary.dd
+Use cJugadorDataDictionary.dd
+
+Register_Object oZoomJugador
+
+Object oSelectJugador is a cWebView
+    Set piColumnCount to 7
+    Set psCaption to "Jugadores"
+    Set pbShowCaption to False
+    Set peViewType to vtSelect
+    Set piMaxWidth to 1024
+    Set psStateViewName to "Jugadores"
+
+    WebSetResponsive piColumnCount rmTabletPortrait to 3
+
+    Object oLiga_DD is a cLigaDataDictionary
+    End_Object
+
+    Object oEquipo_DD is a cEquipoDataDictionary
+        Set DDO_Server to oLiga_DD
+    End_Object
+
+    Object oJugador_DD is a cJugadorDataDictionary
+        Set DDO_Server to oEquipo_DD
+    End_Object
+
+    Set Main_DD to oJugador_DD
+    Set Server  to oJugador_DD
+
+    Object oList is a cWebList
+        Set piColumnSpan to 0
+        Set pbFillHeight to True
+        Set psCSSClass to "MobileList"
+        Set piSortColumn to 0
+        Set pbServerOnRowClick to True
+        Set pbShowHeader to False
+        Set peDbGridType to gtAllData
+
+        Object oJugadorApellido is a cWebColumn
+            Entry_Item Jugador.Apellido
+            Set psCaption to "Apellido"
+            Set psCSSClass to "RowCaption"
+            Set piWidth to 60
+        End_Object
+
+        Object oDetailButton is a cWebColumnButton
+            Set piWidth to 50
+            Set pbFixedWidth to True
+            Set psCaption to "btn"
+            Set pbResizable to False
+            Set piListRowSpan to 3
+            Set psBtnCssClass to "WebButtonIcon WebIcon_Info"
+            Set peAlign to alignRight
+
+            WebRegisterPath ntNavigateForward oZoomJugador
+
+            Procedure OnClick String sButton String sRowId
+                Send NavigatePath
+            End_Procedure
+
+            Procedure OnGetNavigateForwardData tWebNavigateData ByRef NavigateData Handle hoToView
+                Move True to NavigateData.bReadOnly
+            End_Procedure
+        End_Object
+
+        Object oJugadorNombre is a cWebColumn
+            Entry_Item Jugador.Nombre
+            Set psCaption to "Nombre"
+            Set psCSSClass to "RowDetail"
+            Set piWidth to 40
+            Set pbNewLine to True
+        End_Object
+
+        Object oEquipoNombre is a cWebColumn
+            Entry_Item Equipo.Nombre
+            Set psCaption to "Equipo"
+            Set psCSSClass to "RowDetail"
+            Set piWidth to 40
+            Set pbNewLine to True
+        End_Object
+
+        WebRegisterPath ntNavigateForward oZoomJugador
+
+        Procedure OnRowClick String sRowID
+            tWebNavigateData NavigateData
+            Get GetNavigateData to NavigateData
+
+            Case Begin
+                Case (NavigateData.eNavigateType=nfFromChild)
+                Case (NavigateData.eNavigateType=nfFromMain)
+                    // se ha abierto para elegir un registro: lo devolvemos
+                    Send NavigateClose Self
+                    Case Break
+                Case Else
+                    Send NavigatePath
+            Case End
+        End_Procedure
+    End_Object
+
+    Object oActionGroup is a cWebMenuGroup
+
+        Object oSearch is a cWebMenuItem
+            Set psCaption to "Buscar"
+            Set psCSSClass to "WebPromptMenuItem"
+
+            Procedure OnClick
+                Send Search of oList
+            End_Procedure
+        End_Object
+
+        Object oNewButton is a cWebMenuItem
+            Set psCaption to "Nuevo"
+            Set psCSSClass to "WebClearMenuItem"
+
+            WebRegisterPath ntNavigateForward oZoomJugador Self "NuevoJugador"
+
+            Procedure OnClick
+                Send NavigatePath
+            End_Procedure
+
+            Procedure OnGetNavigateForwardData tWebNavigateData ByRef NavigateData Handle hoToView
+                Move True to NavigateData.bNewRecord
+            End_Procedure
+        End_Object
+
+    End_Object
+
+    Procedure OnNavigateForward tWebNavigateData NavigateData Handle hoInvokingView Handle hoInvokingObject
+        // al elegir un padre desde una ficha no tiene sentido crear ni ver detalles
+        Boolean bLookup
+        Move (NavigateData.eNavigateType = nfFromChild or NavigateData.eNavigateType = nfFromMain) to bLookup
+        WebSet pbRender of oNewButton to (not(bLookup))
+        WebSet pbRender of oDetailButton to (not(bLookup))
+    End_Procedure
+
+End_Object
