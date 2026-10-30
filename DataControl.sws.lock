@@ -1,0 +1,14 @@
+{
+    "dependencies": {
+        "DataFlex-dev/Web UI": {
+            "ref": "1.0.56"
+        },
+        "DataFlex-dev/Web UI Material Theme": {
+            "ref": "1.0.4"
+        },
+        "DataFlex-dev/Web UI Server": {
+            "ref": "1.0.56"
+        }
+    },
+    "lockVersion": "1.0.0"
+}

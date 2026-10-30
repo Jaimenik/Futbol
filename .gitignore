@@ -1,0 +1,21 @@
+﻿# Compilados y temporales de DataFlex
+*.exe
+*.dbg
+*.prn
+*.dep
+*.cch
+*.log
+*.bak
+Programs/GuardarPassword.txt
+
+# Paquetes descargados (df-cli/Studio los reinstala a partir de DataControl.sws)
+DfPkg/
+
+# Copias de seguridad locales
+Data_backup_*/
+
+# Conexión con la contraseña cifrada: cada uno crea la suya a partir de DfConnId.ini.example
+Data/DfConnId.ini
+
+# Bloqueo del IDE
+IdeSrc/Workspace.loc
