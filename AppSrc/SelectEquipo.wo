@@ -5,6 +5,7 @@ Use cWebColumn.pkg
 Use cWebColumnButton.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
+Use cWebLabel.pkg
 
 Use cLigaDataDictionary.dd
 Use cEquipoDataDictionary.dd
@@ -30,6 +31,13 @@ Object oSelectEquipo is a cWebView
 
     Set Main_DD to oEquipo_DD
     Set Server  to oEquipo_DD
+
+    // Solo se ve al llegar desde una liga (nfFromParent)
+    Object oHeader is a cWebLabel
+        Set piColumnSpan to 0
+        Set psCSSClass to "LabelDetail"
+        Set pbRender to False
+    End_Object
 
     Object oList is a cWebList
         Set piColumnSpan to 0
@@ -127,6 +135,20 @@ Object oSelectEquipo is a cWebView
         Move (NavigateData.eNavigateType = nfFromChild or NavigateData.eNavigateType = nfFromMain) to bLookup
         WebSet pbRender of oNewButton to (not(bLookup))
         WebSet pbRender of oDetailButton to (not(bLookup))
+
+        // From parent: la lista ya viene filtrada por la liga (el DD de Equipo
+        // tiene como servidor al de Liga, que el framework sitúa en la liga de la
+        // vista que nos llama). Sólo falta decir de qué liga son.
+        If (NavigateData.eNavigateType = nfFromParent) Begin
+            WebSet psCaption of oHeader to ("Equipos de " + Trim(Liga.Nombre))
+            WebSet pbRender of oHeader to True
+            WebSet pbRender of oLigaNombre to False
+            Send SetBreadcrumbCaption ("Equipos de " + Trim(Liga.Nombre))
+        End
+        Else Begin
+            WebSet pbRender of oHeader to False
+            WebSet pbRender of oLigaNombre to True
+        End
     End_Procedure
 
 End_Object
