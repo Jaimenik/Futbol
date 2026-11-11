@@ -9,6 +9,7 @@ Use cEquipoDataDictionary.dd
 Use cJugadorDataDictionary.dd
 
 Register_Object oSelectEquipo
+Register_Object oSelectJugador
 
 Object oZoomJugador is a cWebView
     Set psCaption to "Jugador"
@@ -48,6 +49,22 @@ Object oZoomJugador is a cWebView
             Set piColumnSpan to 6
             Set psLabel to "Apellido"
             Set peLabelPosition to lpTop
+            Set pbPromptButton to True
+
+            // From main: el Zoom abre la Select de su misma tabla (Jugador).
+            // El InvokingObject es este form; al elegir una fila la Select se
+            // cierra y el Zoom pasa a mostrar el jugador elegido.
+            WebRegisterPath ntNavigateForward oSelectJugador Self "BuscarJugador"
+
+            Procedure OnPrompt
+                Send NavigatePath
+            End_Procedure
+
+            // Llega aquí (al InvokingObject) al volver de la Select
+            Procedure OnNavigateBack Handle hoCallback tWebNavigateData NavigateData
+                Forward Send OnNavigateBack hoCallback NavigateData
+                Send SetBreadcrumbCaption (Trim(Jugador.Apellido))
+            End_Procedure
         End_Object
 
         Object oJugadorNacionalidad is a cWebForm
