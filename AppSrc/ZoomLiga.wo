@@ -3,10 +3,11 @@ Use cWebPanel.pkg
 Use cWebForm.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
+Use cWebButton.pkg
 
 Use cLigaDataDictionary.dd
 
-
+Register_Object oSelectEquipo
 
 Object oZoomLiga is a cWebView
     Set psCaption to "Liga"
@@ -54,6 +55,20 @@ Object oZoomLiga is a cWebView
             Set peLabelPosition to lpTop
         End_Object
 
+        // From parent: Liga es padre de Equipo, así que DataFlex trata esta
+        // navegación como nfFromParent y la Select de equipos sale filtrada
+        // por la liga que estamos viendo.
+        Object oVerEquiposBtn is a cWebButton
+            Set piColumnSpan to 4
+            Set psCaption to "Ver equipos de esta liga"
+
+            WebRegisterPath ntNavigateForward oSelectEquipo
+
+            Procedure OnClick
+                Send NavigatePath
+            End_Procedure
+        End_Object
+
     End_Object
 
     Procedure SetActionButtons
@@ -65,6 +80,8 @@ Object oZoomLiga is a cWebView
         WebSet pbRender of oEditBtn to NavigateData.bReadOnly
         WebSet pbRender of oSaveBtn to (not(NavigateData.bReadOnly))
         WebSet pbRender of oDeleteBtn to bHasRecord
+        // una liga nueva sin guardar todavía no tiene equipos
+        WebSet pbRender of oVerEquiposBtn to bHasRecord
     End_Procedure
 
     Object oActionGroup is a cWebMenuGroup
