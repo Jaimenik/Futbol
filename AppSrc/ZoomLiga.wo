@@ -36,21 +36,21 @@ Object oZoomLiga is a cWebView
         Object oLigaPais is a cWebForm
             Entry_Item Liga.Pais
             Set piColumnSpan to 4
-            Set psLabel to "PaÃ­s"
+            Set psLabel to "País"
             Set peLabelPosition to lpTop
         End_Object
 
         Object oLigaEquipos is a cWebForm
             Entry_Item Liga.Equipos
             Set piColumnSpan to 4
-            Set psLabel to "NÂº de equipos"
+            Set psLabel to "Nº de equipos"
             Set peLabelPosition to lpTop
         End_Object
 
         Object oLigaEquiposMax is a cWebForm
             Entry_Item Liga.EquiposMax
             Set piColumnSpan to 4
-            Set psLabel to "MÃ¡ximo de equipos"
+            Set psLabel to "Máximo de equipos"
             Set peLabelPosition to lpTop
         End_Object
 
@@ -114,7 +114,7 @@ Object oZoomLiga is a cWebView
             Send SetBreadcrumbCaption (Trim(Liga.Nombre))
         End
         Else Begin
-            Send SetBreadcrumbCaption "Nuevo liga"
+            Send SetBreadcrumbCaption "Nueva liga"
         End
         Send SetActionButtons
     End_Procedure

@@ -26,17 +26,17 @@ Class cLigaDataDictionary is a DataDictionary
         Set Field_Label_Short Field Liga.Nombre to "Nombre"
         Set Field_Option Field Liga.Nombre DD_REQUIRED to True
 
-        Set Field_Label_Long Field Liga.Pais to "PaÃ­s"
-        Set Field_Label_Short Field Liga.Pais to "PaÃ­s"
+        Set Field_Label_Long Field Liga.Pais to "País"
+        Set Field_Label_Short Field Liga.Pais to "País"
         Set Field_Option Field Liga.Pais DD_REQUIRED to True
 
-        Set Field_Label_Long Field Liga.Equipos to "NÂº de equipos"
+        Set Field_Label_Long Field Liga.Equipos to "Nº de equipos"
         Set Field_Label_Short Field Liga.Equipos to "Equipos"
         Set Field_Option Field Liga.Equipos DD_DISPLAYONLY to True
-        Set Status_Help Field Liga.Equipos to "Se calcula solo al aÃ±adir o quitar equipos"
+        Set Status_Help Field Liga.Equipos to "Se calcula solo al añadir o quitar equipos"
 
-        Set Field_Label_Long Field Liga.EquiposMax to "MÃ¡ximo de equipos"
-        Set Field_Label_Short Field Liga.EquiposMax to "MÃ¡x."
+        Set Field_Label_Long Field Liga.EquiposMax to "Máximo de equipos"
+        Set Field_Label_Short Field Liga.EquiposMax to "Máx."
         Set Field_Value_Range Field Liga.EquiposMax to 1 99
 
         Set piPrimaryIndex to 1
@@ -48,7 +48,7 @@ Class cLigaDataDictionary is a DataDictionary
         If iRetVal Function_Return iRetVal
 
         If (Liga.EquiposMax < Liga.Equipos) Begin
-            Send UserError "El mÃ¡ximo no puede ser menor que los equipos que ya tiene la liga" ""
+            Send UserError "El máximo no puede ser menor que los equipos que ya tiene la liga" ""
             Function_Return 1
         End
     End_Function
