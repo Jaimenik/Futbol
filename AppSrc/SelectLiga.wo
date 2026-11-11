@@ -64,7 +64,7 @@ Object oSelectLiga is a cWebView
 
         Object oLigaPais is a cWebColumn
             Entry_Item Liga.Pais
-            Set psCaption to "PaÃ­s"
+            Set psCaption to "País"
             Set psCSSClass to "RowDetail"
             Set piWidth to 40
             Set pbNewLine to True
