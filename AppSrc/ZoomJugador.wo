@@ -3,12 +3,15 @@ Use cWebPanel.pkg
 Use cWebForm.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
+Use cWebButton.pkg
 
 Use cLigaDataDictionary.dd
 Use cEquipoDataDictionary.dd
 Use cJugadorDataDictionary.dd
 
 Register_Object oSelectEquipo
+Register_Object oSelectJugador
+Register_Object oSelectPosicion
 
 Object oZoomJugador is a cWebView
     Set psCaption to "Jugador"
@@ -48,6 +51,22 @@ Object oZoomJugador is a cWebView
             Set piColumnSpan to 6
             Set psLabel to "Apellido"
             Set peLabelPosition to lpTop
+            Set pbPromptButton to True
+
+            // From main: el Zoom abre la Select de su misma tabla (Jugador).
+            // El InvokingObject es este form; al elegir una fila la Select se
+            // cierra y el Zoom pasa a mostrar el jugador elegido.
+            WebRegisterPath ntNavigateForward oSelectJugador Self "BuscarJugador"
+
+            Procedure OnPrompt
+                Send NavigatePath
+            End_Procedure
+
+            // Llega aquí (al InvokingObject) al volver de la Select
+            Procedure OnNavigateBack Handle hoCallback tWebNavigateData NavigateData
+                Forward Send OnNavigateBack hoCallback NavigateData
+                Send SetBreadcrumbCaption (Trim(Jugador.Apellido))
+            End_Procedure
         End_Object
 
         Object oJugadorNacionalidad is a cWebForm
@@ -68,6 +87,25 @@ Object oZoomJugador is a cWebView
 
             Procedure OnPrompt
                 Send NavigatePath
+            End_Procedure
+        End_Object
+
+        // Undefined: Jugador y Posicion no están relacionados directamente
+        // (sólo a través de JugadorPosicion), así que la navegación es
+        // nfUndefined: la Select de posiciones no se filtra ni devuelve nada.
+        // Lo único que viaja es lo que mandemos a mano en NamedValues.
+        Object oVerPosicionesBtn is a cWebButton
+            Set piColumnSpan to 4
+            Set psCaption to "Ver posiciones"
+
+            WebRegisterPath ntNavigateForward oSelectPosicion
+
+            Procedure OnClick
+                Send NavigatePath
+            End_Procedure
+
+            Procedure OnGetNavigateForwardData tWebNavigateData ByRef NavigateData Handle hoToView
+                Get NamedValueAdd NavigateData.NamedValues "jugador" (Trim(Jugador.Nombre) * Trim(Jugador.Apellido)) to NavigateData.NamedValues
             End_Procedure
         End_Object
 

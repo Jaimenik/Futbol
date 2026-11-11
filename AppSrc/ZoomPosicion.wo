@@ -9,12 +9,12 @@ Use cPosicionDataDictionary.dd
 
 
 Object oZoomPosicion is a cWebView
-    Set psCaption to "PosiciÃ³n"
+    Set psCaption to "Posición"
     Set pbShowCaption to False
     Set piMaxWidth to 1024
     Set peViewType to vtZoom
     Set Verify_Save_msg to 0
-    Set psStateViewName to "PosiciÃ³n"
+    Set psStateViewName to "Posicion"
 
     Object oPosicion_DD is a cPosicionDataDictionary
     End_Object
@@ -93,7 +93,7 @@ Object oZoomPosicion is a cWebView
             Send SetBreadcrumbCaption (Trim(Posicion.Nombre))
         End
         Else Begin
-            Send SetBreadcrumbCaption "Nuevo posiciã³n"
+            Send SetBreadcrumbCaption "Nueva posición"
         End
         Send SetActionButtons
     End_Procedure

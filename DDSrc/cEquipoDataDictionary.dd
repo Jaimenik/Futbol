@@ -53,7 +53,7 @@ Class cEquipoDataDictionary is a DataDictionary
         If iRetVal Function_Return iRetVal
 
         If (Liga.Equipos > Liga.EquiposMax) Begin
-            Send UserError ("La liga " + Trim(Liga.Nombre) + " ya tiene el mÃ¡ximo de equipos") ""
+            Send UserError ("La liga " + Trim(Liga.Nombre) + " ya tiene el máximo de equipos") ""
             Function_Return 1
         End
     End_Function

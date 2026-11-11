@@ -3,10 +3,14 @@ Use cWebPanel.pkg
 Use cWebForm.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
+Use cWebLabel.pkg
+Use cWebList.pkg
+Use cWebColumn.pkg
 
 Use cLigaDataDictionary.dd
+Use cEquipoDataDictionary.dd
 
-
+Register_Object oZoomEquipo
 
 Object oZoomLiga is a cWebView
     Set psCaption to "Liga"
@@ -17,6 +21,12 @@ Object oZoomLiga is a cWebView
     Set psStateViewName to "Liga"
 
     Object oLiga_DD is a cLigaDataDictionary
+    End_Object
+
+    // Equipos de la liga: DD hijo restringido a la liga actual
+    Object oEquipo_DD is a cEquipoDataDictionary
+        Set DDO_Server to oLiga_DD
+        Set Constrain_File to Liga.File_Number
     End_Object
 
     Set Main_DD to oLiga_DD
@@ -36,22 +46,58 @@ Object oZoomLiga is a cWebView
         Object oLigaPais is a cWebForm
             Entry_Item Liga.Pais
             Set piColumnSpan to 4
-            Set psLabel to "PaÃ­s"
+            Set psLabel to "País"
             Set peLabelPosition to lpTop
         End_Object
 
         Object oLigaEquipos is a cWebForm
             Entry_Item Liga.Equipos
             Set piColumnSpan to 4
-            Set psLabel to "NÂº de equipos"
+            Set psLabel to "Nº de equipos"
             Set peLabelPosition to lpTop
         End_Object
 
         Object oLigaEquiposMax is a cWebForm
             Entry_Item Liga.EquiposMax
             Set piColumnSpan to 4
-            Set psLabel to "MÃ¡ximo de equipos"
+            Set psLabel to "Máximo de equipos"
             Set peLabelPosition to lpTop
+        End_Object
+
+        // From parent (2): en vez de un botón que abra la Select de equipos,
+        // los equipos de la liga se ven aquí mismo. La lista usa el DD de
+        // Equipo, que tiene como servidor el de Liga y está restringido a él.
+        Object oEquiposLabel is a cWebLabel
+            Set piColumnSpan to 0
+            Set psCaption to "Equipos de la liga"
+            Set psCSSClass to "LabelDetail"
+        End_Object
+
+        Object oEquiposList is a cWebList
+            Set piColumnSpan to 0
+            Set Server to oEquipo_DD
+            Set psCSSClass to "MobileList SubList"
+            Set pbShowHeader to False
+            Set pbScroll to False
+            Set pbServerOnRowClick to True
+            Set psPlaceHolder to "Esta liga no tiene equipos"
+            Set peDbGridType to gtAllData
+
+            Object oEquipoNombre is a cWebColumn
+                Entry_Item Equipo.Nombre
+                Set psCaption to "Equipo"
+                Set psCSSClass to "RowCaption"
+            End_Object
+
+            WebRegisterPath ntNavigateForward oZoomEquipo
+
+            Procedure OnRowClick String sRowID
+                Send NavigatePath
+            End_Procedure
+
+            Procedure OnGetNavigateForwardData tWebNavigateData ByRef NavigateData Handle hoToView
+                Move True to NavigateData.bReadOnly
+            End_Procedure
         End_Object
 
     End_Object
@@ -65,6 +111,9 @@ Object oZoomLiga is a cWebView
         WebSet pbRender of oEditBtn to NavigateData.bReadOnly
         WebSet pbRender of oSaveBtn to (not(NavigateData.bReadOnly))
         WebSet pbRender of oDeleteBtn to bHasRecord
+        // una liga nueva sin guardar todavía no tiene equipos
+        WebSet pbRender of oEquiposLabel to bHasRecord
+        WebSet pbRender of oEquiposList to bHasRecord
     End_Procedure
 
     Object oActionGroup is a cWebMenuGroup
@@ -114,7 +163,7 @@ Object oZoomLiga is a cWebView
             Send SetBreadcrumbCaption (Trim(Liga.Nombre))
         End
         Else Begin
-            Send SetBreadcrumbCaption "Nuevo liga"
+            Send SetBreadcrumbCaption "Nueva liga"
         End
         Send SetActionButtons
     End_Procedure

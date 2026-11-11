@@ -5,6 +5,7 @@ Use cWebColumn.pkg
 Use cWebColumnButton.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
+Use cWebLabel.pkg
 
 Use cPosicionDataDictionary.dd
 
@@ -25,6 +26,13 @@ Object oSelectPosicion is a cWebView
 
     Set Main_DD to oPosicion_DD
     Set Server  to oPosicion_DD
+
+    // Solo se ve al llegar desde un jugador (navegación nfUndefined)
+    Object oHeader is a cWebLabel
+        Set piColumnSpan to 0
+        Set psCSSClass to "LabelDetail"
+        Set pbRender to False
+    End_Object
 
     Object oList is a cWebList
         Set piColumnSpan to 0
@@ -111,9 +119,21 @@ Object oSelectPosicion is a cWebView
     Procedure OnNavigateForward tWebNavigateData NavigateData Handle hoInvokingView Handle hoInvokingObject
         // al elegir un padre desde una ficha no tiene sentido crear ni ver detalles
         Boolean bLookup
+        String sJugador
         Move (NavigateData.eNavigateType = nfFromChild or NavigateData.eNavigateType = nfFromMain) to bLookup
         WebSet pbRender of oNewButton to (not(bLookup))
         WebSet pbRender of oDetailButton to (not(bLookup))
+
+        // Undefined: no hay relación entre la vista que llama y ésta, así que
+        // la lista no se filtra. Sólo sabemos lo que nos pasen en NamedValues.
+        Get NamedValueGet NavigateData.NamedValues "jugador" to sJugador
+        If (NavigateData.eNavigateType = nfUndefined and sJugador <> "") Begin
+            WebSet psCaption of oHeader to ("Posiciones (abierto desde " + sJugador + ")")
+            WebSet pbRender of oHeader to True
+        End
+        Else Begin
+            WebSet pbRender of oHeader to False
+        End
     End_Procedure
 
 End_Object
