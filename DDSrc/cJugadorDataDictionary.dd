@@ -1,4 +1,5 @@
 ﻿Use DataDict.pkg
+Use FutbolValidationTables.pkg
 
 Open Jugador
 Open Equipo
@@ -37,6 +38,9 @@ Class cJugadorDataDictionary is a DataDictionary
 
         Set Field_Label_Long Field Jugador.Nacionalidad to "Nacionalidad"
         Set Field_Label_Short Field Jugador.Nacionalidad to "Nacionalidad"
+        Set Field_Class_Name Field Jugador.Nacionalidad to "Combo"
+        Set Field_Value_Table Field Jugador.Nacionalidad to oNacionalidad_VT
+        Set Status_Help Field Jugador.Nacionalidad to "Elige la nacionalidad de la lista"
 
         Set Field_Label_Long Field Jugador.EquipoID to "Equipo"
         Set Field_Label_Short Field Jugador.EquipoID to "Equipo"

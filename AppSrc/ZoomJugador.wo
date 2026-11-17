@@ -1,6 +1,7 @@
 ﻿Use cWebView.pkg
 Use cWebPanel.pkg
 Use cWebForm.pkg
+Use cWebCombo.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 Use cWebButton.pkg
@@ -69,7 +70,7 @@ Object oZoomJugador is a cWebView
             End_Procedure
         End_Object
 
-        Object oJugadorNacionalidad is a cWebForm
+        Object oJugadorNacionalidad is a cWebCombo
             Entry_Item Jugador.Nacionalidad
             Set piColumnSpan to 6
             Set psLabel to "Nacionalidad"

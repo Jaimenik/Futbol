@@ -1,0 +1,51 @@
+﻿// Tablas de validación compartidas por los Data Dictionaries.
+// Un campo con Field_Value_Table sólo admite valores de su lista y en la web
+// se pinta como desplegable (cWebCombo).
+Use DataDict.pkg
+
+Object oNacionalidad_VT is a ValidationTable
+    Set Table_Title to "Nacionalidades"
+    Set Allow_Blank_State to True
+
+    Procedure Fill_List
+        Forward Send Fill_List
+        Send Add_Table_Value "Alemán"
+        Send Add_Table_Value "Argentino"
+        Send Add_Table_Value "Belga"
+        Send Add_Table_Value "Brasileño"
+        Send Add_Table_Value "Colombiano"
+        Send Add_Table_Value "Croata"
+        Send Add_Table_Value "Danés"
+        Send Add_Table_Value "Egipcio"
+        Send Add_Table_Value "Escocés"
+        Send Add_Table_Value "Esloveno"
+        Send Add_Table_Value "Español"
+        Send Add_Table_Value "Francés"
+        Send Add_Table_Value "Húngaro"
+        Send Add_Table_Value "Inglés"
+        Send Add_Table_Value "Italiano"
+        Send Add_Table_Value "Marroquí"
+        Send Add_Table_Value "Mexicano"
+        Send Add_Table_Value "Mozambiqueño"
+        Send Add_Table_Value "Neerlandés"
+        Send Add_Table_Value "Noruego"
+        Send Add_Table_Value "Polaco"
+        Send Add_Table_Value "Portugués"
+        Send Add_Table_Value "Uruguayo"
+    End_Procedure
+End_Object
+
+Object oPais_VT is a ValidationTable
+    Set Table_Title to "Países"
+
+    Procedure Fill_List
+        Forward Send Fill_List
+        Send Add_Table_Value "Alemania"
+        Send Add_Table_Value "España"
+        Send Add_Table_Value "Francia"
+        Send Add_Table_Value "Inglaterra"
+        Send Add_Table_Value "Italia"
+        Send Add_Table_Value "Países Bajos"
+        Send Add_Table_Value "Portugal"
+    End_Procedure
+End_Object
