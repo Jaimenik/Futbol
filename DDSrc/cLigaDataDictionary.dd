@@ -1,10 +1,10 @@
-﻿Use DataDict.pkg
+﻿Use cFutbolDataDictionary.pkg
 Use FutbolValidationTables.pkg
 
 Open Liga
 Open Equipo
 
-Class cLigaDataDictionary is a DataDictionary
+Class cLigaDataDictionary is a cFutbolDataDictionary
 
     Procedure Construct_Object
         Forward Send Construct_Object
@@ -52,6 +52,18 @@ Class cLigaDataDictionary is a DataDictionary
 
         If (Liga.EquiposMax < Liga.Equipos) Begin
             Send UserError "El máximo no puede ser menor que los equipos que ya tiene la liga" ""
+            Function_Return 1
+        End
+    End_Function
+
+    // Mensaje propio antes de que el DD bloquee el borrado por tener hijos
+    Function Validate_Delete Returns Integer
+        Integer iRetVal
+        Forward Get Validate_Delete to iRetVal
+        If iRetVal Function_Return iRetVal
+
+        If (Liga.Equipos > 0) Begin
+            Send UserError ("No se puede borrar " + Trim(Liga.Nombre) + ": todavía tiene " + String(Liga.Equipos) + " equipos") ""
             Function_Return 1
         End
     End_Function
