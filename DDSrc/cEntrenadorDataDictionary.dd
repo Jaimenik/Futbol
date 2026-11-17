@@ -1,4 +1,5 @@
 ﻿Use DataDict.pkg
+Use FutbolValidationTables.pkg
 
 Open Entrenador
 Open Equipo
@@ -35,6 +36,9 @@ Class cEntrenadorDataDictionary is a DataDictionary
 
         Set Field_Label_Long Field Entrenador.Nacionalidad to "Nacionalidad"
         Set Field_Label_Short Field Entrenador.Nacionalidad to "Nacionalidad"
+        Set Field_Class_Name Field Entrenador.Nacionalidad to "Combo"
+        Set Field_Value_Table Field Entrenador.Nacionalidad to oNacionalidad_VT
+        Set Status_Help Field Entrenador.Nacionalidad to "Elige la nacionalidad de la lista"
 
         Set Field_Label_Long Field Entrenador.EquipoID to "Equipo"
         Set Field_Label_Short Field Entrenador.EquipoID to "Equipo"

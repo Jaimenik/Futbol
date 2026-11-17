@@ -1,6 +1,7 @@
 ﻿Use cWebView.pkg
 Use cWebPanel.pkg
 Use cWebForm.pkg
+Use cWebCombo.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 Use cWebLabel.pkg
@@ -43,7 +44,7 @@ Object oZoomLiga is a cWebView
             Set peLabelPosition to lpTop
         End_Object
 
-        Object oLigaPais is a cWebForm
+        Object oLigaPais is a cWebCombo
             Entry_Item Liga.Pais
             Set piColumnSpan to 4
             Set psLabel to "País"

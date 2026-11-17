@@ -1,6 +1,7 @@
 ﻿Use cWebView.pkg
 Use cWebPanel.pkg
 Use cWebForm.pkg
+Use cWebCombo.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 
@@ -50,7 +51,7 @@ Object oZoomEntrenador is a cWebView
             Set peLabelPosition to lpTop
         End_Object
 
-        Object oEntrenadorNacionalidad is a cWebForm
+        Object oEntrenadorNacionalidad is a cWebCombo
             Entry_Item Entrenador.Nacionalidad
             Set piColumnSpan to 6
             Set psLabel to "Nacionalidad"

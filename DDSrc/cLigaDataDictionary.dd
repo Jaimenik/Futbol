@@ -1,4 +1,5 @@
 ﻿Use DataDict.pkg
+Use FutbolValidationTables.pkg
 
 Open Liga
 Open Equipo
@@ -29,6 +30,8 @@ Class cLigaDataDictionary is a DataDictionary
         Set Field_Label_Long Field Liga.Pais to "País"
         Set Field_Label_Short Field Liga.Pais to "País"
         Set Field_Option Field Liga.Pais DD_REQUIRED to True
+        Set Field_Class_Name Field Liga.Pais to "Combo"
+        Set Field_Value_Table Field Liga.Pais to oPais_VT
 
         Set Field_Label_Long Field Liga.Equipos to "Nº de equipos"
         Set Field_Label_Short Field Liga.Equipos to "Equipos"
