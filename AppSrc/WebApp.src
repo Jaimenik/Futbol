@@ -9,6 +9,7 @@ End_Object
 
 Object oWebApp is a cWebApp
     Set psTheme to "Df_Material"
+    Set psApplicationTitle to "FutbolWebApp"
     Set peAlignView to alignCenter
     
     // It is important to set this so that all views will default
@@ -32,8 +33,8 @@ Object oWebApp is a cWebApp
                 Set piMenuHeight to 500
 
                 Object oDashboard_itm is a cWebMenuItem
-                    Set psCaption to C_$Dashboard
-                    
+                    Set psCaption to "Inicio"
+
                     WebRegisterPath ntNavigateBegin oDashboard
 
                     Procedure OnClick
@@ -41,12 +42,54 @@ Object oWebApp is a cWebApp
                     End_Procedure
                 End_Object
 
+                // Menú hamburguesa: ntNavigateBegin vacía el ViewStack y empieza
+                // de nuevo (Dashboard y luego la vista elegida)
                 Object oViewMenu is a cWebMenuItem
-                    Set psCaption to C_$View
+                    Set psCaption to "Vistas"
+
+                    Object oLigas_itm is a cWebMenuItem
+                        Set psCaption to "Ligas"
+                        WebRegisterPath ntNavigateBegin oSelectLiga
+                        Procedure OnClick
+                            Send NavigatePath
+                        End_Procedure
+                    End_Object
+
+                    Object oEquipos_itm is a cWebMenuItem
+                        Set psCaption to "Equipos"
+                        WebRegisterPath ntNavigateBegin oSelectEquipo
+                        Procedure OnClick
+                            Send NavigatePath
+                        End_Procedure
+                    End_Object
+
+                    Object oEntrenadores_itm is a cWebMenuItem
+                        Set psCaption to "Entrenadores"
+                        WebRegisterPath ntNavigateBegin oSelectEntrenador
+                        Procedure OnClick
+                            Send NavigatePath
+                        End_Procedure
+                    End_Object
+
+                    Object oJugadores_itm is a cWebMenuItem
+                        Set psCaption to "Jugadores"
+                        WebRegisterPath ntNavigateBegin oSelectJugador
+                        Procedure OnClick
+                            Send NavigatePath
+                        End_Procedure
+                    End_Object
+
+                    Object oPosiciones_itm is a cWebMenuItem
+                        Set psCaption to "Posiciones"
+                        WebRegisterPath ntNavigateBegin oSelectPosicion
+                        Procedure OnClick
+                            Send NavigatePath
+                        End_Procedure
+                    End_Object
                 End_Object
 
                 Object oSignOut_itm is a cWebMenuItem
-                    Set psCaption to C_$LogOut
+                    Set psCaption to "Cerrar sesión"
 
                     Procedure OnClick
                         Send RequestLogOut of (SessionManager(Self))

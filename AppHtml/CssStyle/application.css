@@ -1,0 +1,77 @@
+/* Estilo propio de FutbolWebApp sobre el tema Df_Material */
+
+/* Paleta "césped": el tema usa estas variables para cabecera, botones y selección */
+:root {
+    --df-MainDark: #0b5d2a;
+    --df-MainRegular: #138a3e;
+    --df-MainMedium: #1c9a4a;
+    --df-MainLight: #23a956;
+    --df-MainLight2: #9bd7ae;
+    --df-MainLight3: #cdebd6;
+    --df-MainLight4: #eaf6ee;
+    --df-Highlight: #f4c430;
+}
+
+/* Tarjetas: esquinas redondeadas, franja de color arriba y elevación al pasar el ratón */
+.Tile .WebCon_Sizer {
+    border-radius: 10px;
+    border-top: 5px solid var(--df-MainLight);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.Tile .WebCon_Sizer:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.14);
+}
+.Tile.Dark .WebCon_Sizer,
+.Tile.DarkAlternate .WebCon_Sizer {
+    border-top-color: var(--df-MainDark);
+}
+.Tile .Tile_Title {
+    top: 30px;
+    font-weight: 500;
+}
+.Tile .Tile_Icon {
+    display: block;
+    text-align: center;
+    font-size: 26px;
+    position: relative;
+    top: 20px;
+}
+.Tile .Tile_Subtitle {
+    display: block;
+    text-align: center;
+    position: relative;
+    top: 36px;
+    color: var(--df-Grayscale2);
+    font-size: 14px;
+}
+
+/* Listas: el registro principal en verde oscuro */
+.MobileList .RowCaption {
+    color: var(--df-MainDark);
+    font-weight: 500;
+}
+
+/* Cabeceras de las Select y de la lista de equipos del Zoom liga */
+.LabelDetail {
+    font-weight: 500;
+    color: var(--df-MainDark);
+}
+
+/* Pantalla de login */
+.LoginLogo {
+    text-align: center;
+    padding: 20px 0 10px 0;
+    color: var(--df-MainDark);
+}
+.LoginLogo .LoginLogo_Ball {
+    display: block;
+    font-size: 64px;
+    line-height: 1;
+}
+.LoginLogo .LoginLogo_Text {
+    display: block;
+    font-size: 30px;
+    font-weight: 500;
+    margin-top: 8px;
+}
