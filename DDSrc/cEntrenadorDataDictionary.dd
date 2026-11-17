@@ -1,10 +1,10 @@
-﻿Use DataDict.pkg
+﻿Use cFutbolDataDictionary.pkg
 Use FutbolValidationTables.pkg
 
 Open Entrenador
 Open Equipo
 
-Class cEntrenadorDataDictionary is a DataDictionary
+Class cEntrenadorDataDictionary is a cFutbolDataDictionary
 
     Procedure Construct_Object
         Forward Send Construct_Object
@@ -29,10 +29,12 @@ Class cEntrenadorDataDictionary is a DataDictionary
         Set Field_Label_Long Field Entrenador.Nombre to "Nombre"
         Set Field_Label_Short Field Entrenador.Nombre to "Nombre"
         Set Field_Option Field Entrenador.Nombre DD_REQUIRED to True
+        Set Field_Validate_msg Field Entrenador.Nombre to (RefFunc(ValidaNombre))
 
         Set Field_Label_Long Field Entrenador.Apellido to "Apellido"
         Set Field_Label_Short Field Entrenador.Apellido to "Apellido"
         Set Field_Option Field Entrenador.Apellido DD_REQUIRED to True
+        Set Field_Validate_msg Field Entrenador.Apellido to (RefFunc(ValidaNombre))
 
         Set Field_Label_Long Field Entrenador.Nacionalidad to "Nacionalidad"
         Set Field_Label_Short Field Entrenador.Nacionalidad to "Nacionalidad"
@@ -48,6 +50,7 @@ Class cEntrenadorDataDictionary is a DataDictionary
 
     Procedure Field_Defaults
         Forward Send Field_Defaults
+        Set Field_Changed_Value Field Entrenador.Nacionalidad to "Español"
     End_Procedure
 
 End_Class

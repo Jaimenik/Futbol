@@ -1,9 +1,9 @@
-﻿Use DataDict.pkg
+﻿Use cFutbolDataDictionary.pkg
 
 Open Posicion
 Open JugadorPosicion
 
-Class cPosicionDataDictionary is a DataDictionary
+Class cPosicionDataDictionary is a cFutbolDataDictionary
 
     Procedure Construct_Object
         Forward Send Construct_Object
