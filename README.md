@@ -1,6 +1,13 @@
-﻿# FutbolWebApp (Sprint 1)
+﻿# FutbolWebApp
 
 Aplicación web DataFlex 2026 (plantilla *Foundation – Drilldown*) sobre la base de datos MySQL `futbol`.
+
+Documentación por sprint:
+
+- Sprint 1: estructura del proyecto (este README).
+- Sprint 2: [SPRINT2.md](SPRINT2.md) — tipos de navegación.
+- Sprint 3: [DATADICTIONARY.md](DATADICTIONARY.md) — reglas de los Data Dictionaries y mejoras visuales
+  (paleta verde, login propio, menú con las vistas y Dashboard con recuentos).
 
 ## Qué incluye
 
