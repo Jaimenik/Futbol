@@ -25,6 +25,7 @@ Class cPosicionDataDictionary is a cFutbolDataDictionary
         Set Field_Label_Long Field Posicion.Nombre to "Nombre"
         Set Field_Label_Short Field Posicion.Nombre to "Nombre"
         Set Field_Option Field Posicion.Nombre DD_REQUIRED to True
+        Set Field_Option Field Posicion.Nombre DD_COMMIT to True
 
         Set piPrimaryIndex to 1
     End_Procedure

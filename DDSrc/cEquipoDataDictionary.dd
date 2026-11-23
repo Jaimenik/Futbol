@@ -29,6 +29,7 @@ Class cEquipoDataDictionary is a cFutbolDataDictionary
         Set Field_Label_Long Field Equipo.Nombre to "Nombre"
         Set Field_Label_Short Field Equipo.Nombre to "Nombre"
         Set Field_Option Field Equipo.Nombre DD_REQUIRED to True
+        Set Field_Option Field Equipo.Nombre DD_COMMIT to True
 
         Set Field_Label_Long Field Equipo.LigaID to "Liga"
         Set Field_Label_Short Field Equipo.LigaID to "Liga"
@@ -51,6 +52,12 @@ Class cEquipoDataDictionary is a cFutbolDataDictionary
         Integer iRetVal
         Forward Get Validate_Save to iRetVal
         If iRetVal Function_Return iRetVal
+
+        // LigaID es NOT NULL: el equipo tiene que tener liga
+        If (Liga.ID = 0) Begin
+            Send UserError "Elige la liga del equipo" ""
+            Function_Return 1
+        End
 
         If (Liga.Equipos > Liga.EquiposMax) Begin
             Send UserError ("La liga " + Trim(Liga.Nombre) + " ya tiene el máximo de equipos") ""
