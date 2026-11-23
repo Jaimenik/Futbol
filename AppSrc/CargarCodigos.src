@@ -1,0 +1,120 @@
+﻿// Carga en CodeType/CodeMast los códigos de validación del proyecto:
+// las nacionalidades que tienen hoy jugadores y entrenadores, y los países.
+// Si ya existen no los duplica. Se ejecuta una vez (o tras recrear la BD).
+Use Windows.pkg
+Use cConnection.pkg
+
+Direct_Output channel 9 "CargarCodigos.txt"
+
+Object oLogErr is a cObject
+    Procedure Error_Report Integer iErrNum Integer iErrLine String sErrText
+        Writeln channel 9 ("ERROR " + String(iErrNum) + ": " + sErrText)
+    End_Procedure
+End_Object
+Move oLogErr to Error_Object_Id
+
+Object oApplication is a cApplication
+    Object oConnection is a cConnection
+        Use LoginEncryption.pkg
+    End_Object
+End_Object
+
+Open CodeType
+Open CodeMast
+
+Procedure AddType String sType String sDescription
+    Clear CodeType
+    Move sType to CodeType.Type
+    Find Eq CodeType by Index.1
+    If (not(Found)) Begin
+        Clear CodeType
+        Move sType to CodeType.Type
+        Move sDescription to CodeType.Description
+        Begin_Transaction
+            SaveRecord CodeType
+        End_Transaction
+        Writeln channel 9 ("Tipo creado: " + sType)
+    End
+End_Procedure
+
+Procedure AddCode String sType String sCode
+    Clear CodeMast
+    Move sType to CodeMast.Type
+    Move sCode to CodeMast.Code
+    Find Eq CodeMast by Index.1
+    If (not(Found)) Begin
+        Clear CodeMast
+        Move sType to CodeMast.Type
+        Move sCode to CodeMast.Code
+        Move sCode to CodeMast.Description
+        Begin_Transaction
+            SaveRecord CodeMast
+        End_Transaction
+        Writeln channel 9 ("  " + sType + ": " + sCode)
+    End
+End_Procedure
+
+// CodeMast.Code viene de la plantilla con 10 caracteres y "Mozambiqueño" no
+// cabe: lo ampliamos a 30 en MySQL con SQL embebido sobre la conexión "futbol".
+Procedure AmpliarCode
+    Handle hoConn hoStmt
+    Get SQLConnectionId of ghoConnection "futbol" to hoConn
+    If hoConn Begin
+        Get SQLOpen of hoConn to hoStmt
+        Send SQLExecDirect of hoStmt "ALTER TABLE codemast MODIFY Code VARCHAR(30) NOT NULL"
+        Send SQLClose of hoStmt
+        Send DestroySQLConnection of hoConn
+        Writeln channel 9 "CodeMast.Code ampliado a 30"
+    End
+    // volver a abrir la tabla para que DataFlex lea la nueva longitud
+    Close CodeMast
+    Open CodeMast
+End_Procedure
+
+Procedure Main
+    Integer iLenType iLenCode
+    Get_Attribute DF_FIELD_LENGTH of CodeMast.File_Number 2 to iLenCode
+    If (iLenCode < 30) Send AmpliarCode
+    Get_Attribute DF_FIELD_LENGTH of CodeMast.File_Number 1 to iLenType
+    Get_Attribute DF_FIELD_LENGTH of CodeMast.File_Number 2 to iLenCode
+    Writeln channel 9 ("Longitud Type=" + String(iLenType) + " Code=" + String(iLenCode))
+    If (iLenType < 6 or iLenCode < 12) Begin
+        Writeln channel 9 "ERROR: los campos de CodeMast son demasiado cortos"
+        Procedure_Return
+    End
+
+    Send AddType "NACION" "Nacionalidades"
+    // Sólo las que tienen ahora mismo jugadores y entrenadores
+    Send AddCode "NACION" "Alemán"
+    Send AddCode "NACION" "Argentino"
+    Send AddCode "NACION" "Belga"
+    Send AddCode "NACION" "Brasileño"
+    Send AddCode "NACION" "Colombiano"
+    Send AddCode "NACION" "Egipcio"
+    Send AddCode "NACION" "Escocés"
+    Send AddCode "NACION" "Esloveno"
+    Send AddCode "NACION" "Español"
+    Send AddCode "NACION" "Francés"
+    Send AddCode "NACION" "Húngaro"
+    Send AddCode "NACION" "Inglés"
+    Send AddCode "NACION" "Italiano"
+    Send AddCode "NACION" "Mozambiqueño"
+    Send AddCode "NACION" "Neerlandés"
+    Send AddCode "NACION" "Noruego"
+    Send AddCode "NACION" "Polaco"
+    Send AddCode "NACION" "Portugués"
+    Send AddCode "NACION" "Uruguayo"
+
+    Send AddType "PAIS" "Países"
+    Send AddCode "PAIS" "España"
+    Send AddCode "PAIS" "Inglaterra"
+    Send AddCode "PAIS" "Alemania"
+    Send AddCode "PAIS" "Francia"
+    Send AddCode "PAIS" "Italia"
+    Send AddCode "PAIS" "Portugal"
+    Send AddCode "PAIS" "Países Bajos"
+    Writeln channel 9 "Terminado"
+End_Procedure
+
+Send Main
+Close_Output channel 9

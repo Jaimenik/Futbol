@@ -24,3 +24,4 @@ Programs/CambiarPasswordAdmin.txt
 # Preferencias locales de Studio
 IdeSrc/*.dsk
 IdeSrc/*.mtd
+Programs/CargarCodigos.txt
