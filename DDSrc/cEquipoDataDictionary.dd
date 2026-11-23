@@ -1,11 +1,11 @@
-﻿Use DataDict.pkg
+﻿Use cFutbolDataDictionary.pkg
 
 Open Equipo
 Open Liga
 Open Entrenador
 Open Jugador
 
-Class cEquipoDataDictionary is a DataDictionary
+Class cEquipoDataDictionary is a cFutbolDataDictionary
 
     Procedure Construct_Object
         Forward Send Construct_Object
@@ -29,6 +29,7 @@ Class cEquipoDataDictionary is a DataDictionary
         Set Field_Label_Long Field Equipo.Nombre to "Nombre"
         Set Field_Label_Short Field Equipo.Nombre to "Nombre"
         Set Field_Option Field Equipo.Nombre DD_REQUIRED to True
+        Set Field_Option Field Equipo.Nombre DD_COMMIT to True
 
         Set Field_Label_Long Field Equipo.LigaID to "Liga"
         Set Field_Label_Short Field Equipo.LigaID to "Liga"
@@ -52,8 +53,38 @@ Class cEquipoDataDictionary is a DataDictionary
         Forward Get Validate_Save to iRetVal
         If iRetVal Function_Return iRetVal
 
+        // LigaID es NOT NULL: el equipo tiene que tener liga
+        If (Liga.ID = 0) Begin
+            Send UserError "Elige la liga del equipo" ""
+            Function_Return 1
+        End
+
         If (Liga.Equipos > Liga.EquiposMax) Begin
             Send UserError ("La liga " + Trim(Liga.Nombre) + " ya tiene el máximo de equipos") ""
+            Function_Return 1
+        End
+    End_Function
+
+    // Un equipo con jugadores o entrenador no se puede borrar: lo avisamos
+    // en español antes de que lo bloquee el propio DD (Cascade_Delete_State False)
+    Function Validate_Delete Returns Integer
+        Integer iRetVal
+        Forward Get Validate_Delete to iRetVal
+        If iRetVal Function_Return iRetVal
+
+        Clear Jugador
+        Move Equipo.ID to Jugador.EquipoID
+        Find Ge Jugador by Index.3
+        If (Found and Jugador.EquipoID = Equipo.ID) Begin
+            Send UserError ("No se puede borrar " + Trim(Equipo.Nombre) + ": todavía tiene jugadores") ""
+            Function_Return 1
+        End
+
+        Clear Entrenador
+        Move Equipo.ID to Entrenador.EquipoID
+        Find Eq Entrenador by Index.3
+        If (Found) Begin
+            Send UserError ("No se puede borrar " + Trim(Equipo.Nombre) + ": tiene entrenador (" + Trim(Entrenador.Apellido) + ")") ""
             Function_Return 1
         End
     End_Function

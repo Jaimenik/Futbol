@@ -27,6 +27,18 @@ Class cJugadorPosicionDataDictionary is a DataDictionary
         Set piPrimaryIndex to 1
     End_Procedure
 
+    // JugadorID y PosicionID son NOT NULL
+    Function Validate_Save Returns Integer
+        Integer iRetVal
+        Forward Get Validate_Save to iRetVal
+        If iRetVal Function_Return iRetVal
+
+        If (Jugador.ID = 0 or Posicion.ID = 0) Begin
+            Send UserError "Elige el jugador y la posición" ""
+            Function_Return 1
+        End
+    End_Function
+
     Procedure Field_Defaults
         Forward Send Field_Defaults
     End_Procedure

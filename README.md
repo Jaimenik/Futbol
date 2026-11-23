@@ -1,6 +1,15 @@
-﻿# FutbolWebApp (Sprint 1)
+# FutbolWebApp
 
 Aplicación web DataFlex 2026 (plantilla *Foundation – Drilldown*) sobre la base de datos MySQL `futbol`.
+
+Documentación por sprint:
+
+- Sprint 1: estructura del proyecto (este README).
+- Sprint 2: [SPRINT2.md](SPRINT2.md) — tipos de navegación.
+- Sprint 3: [DATADICTIONARY.md](DATADICTIONARY.md) — reglas de los Data Dictionaries y mejoras visuales
+  (paleta verde, login propio, menú con las vistas y Dashboard con recuentos).
+- Sprint 4: [SPRINT4.md](SPRINT4.md) — claves protegidas, nombres no modificables (DD_COMMIT), requeridos,
+  botón Despedir (NULL) y nacionalidades en CodeMast/CodeType.
 
 ## Qué incluye
 
@@ -16,8 +25,9 @@ Aplicación web DataFlex 2026 (plantilla *Foundation – Drilldown*) sobre la ba
 2. Instalar MySQL Connector/ODBC 9.6 (64 bits).
 3. Copiar `Data\DfConnId.ini.example` como `Data\DfConnId.ini` y guardar la contraseña de MySQL
    ejecutando `Programs\guardar_password.ps1` (la guarda cifrada con la clave del workspace).
-4. Para entrar en la web con el usuario `admin`, ponerle una contraseña con `Programs\cambiar_password_admin.ps1`.
-5. Abrir `DataControl.sws` en DataFlex Studio 2026 y ejecutar (F5).
+4. Cargar los códigos de validación compilando y ejecutando `AppSrc\CargarCodigos.src` (una vez).
+5. Para entrar en la web con el usuario `admin`, ponerle una contraseña con `Programs\cambiar_password_admin.ps1`.
+6. Abrir `DataControl.sws` en DataFlex Studio 2026 y ejecutar (F5).
 
 ## Flujo de trabajo (gitflow)
 

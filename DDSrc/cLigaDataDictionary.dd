@@ -1,9 +1,10 @@
-﻿Use DataDict.pkg
+﻿Use cFutbolDataDictionary.pkg
+Use FutbolValidationTables.pkg
 
 Open Liga
 Open Equipo
 
-Class cLigaDataDictionary is a DataDictionary
+Class cLigaDataDictionary is a cFutbolDataDictionary
 
     Procedure Construct_Object
         Forward Send Construct_Object
@@ -25,10 +26,13 @@ Class cLigaDataDictionary is a DataDictionary
         Set Field_Label_Long Field Liga.Nombre to "Nombre"
         Set Field_Label_Short Field Liga.Nombre to "Nombre"
         Set Field_Option Field Liga.Nombre DD_REQUIRED to True
+        Set Field_Option Field Liga.Nombre DD_COMMIT to True
 
         Set Field_Label_Long Field Liga.Pais to "País"
         Set Field_Label_Short Field Liga.Pais to "País"
         Set Field_Option Field Liga.Pais DD_REQUIRED to True
+        Set Field_Class_Name Field Liga.Pais to "Combo"
+        Set Field_Value_Table Field Liga.Pais to oPais_VT
 
         Set Field_Label_Long Field Liga.Equipos to "Nº de equipos"
         Set Field_Label_Short Field Liga.Equipos to "Equipos"
@@ -38,6 +42,7 @@ Class cLigaDataDictionary is a DataDictionary
         Set Field_Label_Long Field Liga.EquiposMax to "Máximo de equipos"
         Set Field_Label_Short Field Liga.EquiposMax to "Máx."
         Set Field_Value_Range Field Liga.EquiposMax to 1 99
+        Set Field_Option Field Liga.EquiposMax DD_REQUIRED to True
 
         Set piPrimaryIndex to 1
     End_Procedure
@@ -49,6 +54,18 @@ Class cLigaDataDictionary is a DataDictionary
 
         If (Liga.EquiposMax < Liga.Equipos) Begin
             Send UserError "El máximo no puede ser menor que los equipos que ya tiene la liga" ""
+            Function_Return 1
+        End
+    End_Function
+
+    // Mensaje propio antes de que el DD bloquee el borrado por tener hijos
+    Function Validate_Delete Returns Integer
+        Integer iRetVal
+        Forward Get Validate_Delete to iRetVal
+        If iRetVal Function_Return iRetVal
+
+        If (Liga.Equipos > 0) Begin
+            Send UserError ("No se puede borrar " + Trim(Liga.Nombre) + ": todavía tiene " + String(Liga.Equipos) + " equipos") ""
             Function_Return 1
         End
     End_Function

@@ -1,0 +1,26 @@
+﻿// Clase base de los Data Dictionaries del proyecto. Reúne lo que comparten:
+// la validación de nombres de personas y equipos.
+Use DataDict.pkg
+
+Register_Function ValidaNombre Integer iColumn String sValue Returns Boolean
+
+Class cFutbolDataDictionary is a DataDictionary
+
+    // Field_Validate_msg: devuelve True si el valor NO es válido.
+    // Admite letras (con tildes), espacios, guiones, apóstrofos y puntos.
+    Function ValidaNombre Integer iColumn String sValue Returns Boolean
+        Integer i
+        String sChar
+
+        Move (Trim(sValue)) to sValue
+        For i from 1 to (Length(sValue))
+            Move (Mid(sValue, 1, i)) to sChar
+            If (Uppercase(sChar) = Lowercase(sChar) and Pos(sChar, " -'.") = 0) Begin
+                Send Data_Set_Error iColumn DFERR_OPERATOR "Sólo se admiten letras, espacios, guiones y apóstrofos"
+                Function_Return True
+            End
+        Loop
+        Function_Return False
+    End_Function
+
+End_Class

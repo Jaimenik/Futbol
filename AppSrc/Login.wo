@@ -4,7 +4,7 @@ Use cWebButton.pkg
 Use cWebPanel.pkg
 Use cWebLabel.pkg
 Use cWebSpacer.pkg
-Use cWebImage.pkg
+Use cWebHtmlBox.pkg
 
 Object oLogin is a cWebView
     Set piMinWidth to 250
@@ -29,41 +29,37 @@ Object oLogin is a cWebView
     
     Object oWarning is a cWebLabel
         Set pbVisible to False
-        Set psCaption to "Invalid User ID or password. \n\rHint: 'admin' & 'admin'."
+        Set psCaption to "Usuario o contraseña incorrectos."
         Set peAlign to alignCenter
         Set piColumnSpan to 12
         Set psCSSClass to "LoginWarning"
     End_Object
     
-    Object oLogo is a cWebImage
+    Object oLogo is a cWebHtmlBox
         Set piColumnSpan to 10
-        Set psUrl to "images/DF_Logo_Retina.png"
-        Set pePosition to wiFit
         Set piColumnIndex to 1
-        Set piHeight to 160
-        
-        WebSetResponsive piHeight rmMobile to 100  // Best for small smart phones
+        Set psHtml to '<div class="LoginLogo"><span class="LoginLogo_Ball">⚽</span><span class="LoginLogo_Text">FutbolWebApp</span></div>'
     End_Object
     
     Object oLoginName is a cWebForm
-        Set psLabel to "User ID:"
+        Set psLabel to "Usuario:"
         Set peLabelPosition to lpTop
         Set piMaxLength to 20
         Set piColumnIndex to 1
         Set pbShowLabel to False
-        Set psPlaceHolder to "loginname"
+        Set psPlaceHolder to "usuario"
         Set piColumnSpan to 10
         Set psAutoComplete to "username"
     End_Object
     
     Object oPassword is a cWebForm
-        Set psLabel to "Password:"
+        Set psLabel to "Contraseña:"
         Set pbPassword to True
         Set peLabelAlign to alignLeft
         Set piMaxLength to 20
         Set peLabelPosition to lpTop
         Set pbShowLabel to False
-        Set psPlaceHolder to "password"
+        Set psPlaceHolder to "contraseña"
         Set piColumnSpan to 10
         Set piColumnIndex to 1
         Set psAutoComplete to "current-password"
@@ -76,7 +72,7 @@ Object oLogin is a cWebView
     
     Object oLoginButton is a cWebButton
         Set pbShowLabel to False
-        Set psCaption to "sign in"
+        Set psCaption to "Entrar"
         Set pbServerOnClick to True
         Set piColumnSpan to 10
         Set piColumnIndex to 1

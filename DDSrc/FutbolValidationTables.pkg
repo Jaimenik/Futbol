@@ -1,0 +1,19 @@
+﻿// Tablas de validación compartidas por los Data Dictionaries.
+// Los valores permitidos están en las tablas de códigos de DataFlex:
+//   CodeType: el tipo de lista (NACION, PAIS)
+//   CodeMast: un registro por valor (Type + Code + Description)
+// Se cargan con AppSrc\CargarCodigos.src. Un campo con Field_Value_Table sólo
+// admite valores de su lista y en la web se pinta como desplegable (cWebCombo).
+Use DataDict.pkg
+
+// Nacionalidades que tienen hoy jugadores y entrenadores
+Object oNacionalidad_VT is a CodeValidationTable
+    Set Type_Value to "NACION"
+    Set Table_Title to "Nacionalidades"
+    Set Allow_Blank_State to True
+End_Object
+
+Object oPais_VT is a CodeValidationTable
+    Set Type_Value to "PAIS"
+    Set Table_Title to "Países"
+End_Object

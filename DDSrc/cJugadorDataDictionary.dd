@@ -1,10 +1,11 @@
-﻿Use DataDict.pkg
+﻿Use cFutbolDataDictionary.pkg
+Use FutbolValidationTables.pkg
 
 Open Jugador
 Open Equipo
 Open JugadorPosicion
 
-Class cJugadorDataDictionary is a DataDictionary
+Class cJugadorDataDictionary is a cFutbolDataDictionary
 
     Procedure Construct_Object
         Forward Send Construct_Object
@@ -30,13 +31,20 @@ Class cJugadorDataDictionary is a DataDictionary
         Set Field_Label_Long Field Jugador.Nombre to "Nombre"
         Set Field_Label_Short Field Jugador.Nombre to "Nombre"
         Set Field_Option Field Jugador.Nombre DD_REQUIRED to True
+        Set Field_Option Field Jugador.Nombre DD_COMMIT to True
+        Set Field_Validate_msg Field Jugador.Nombre to (RefFunc(ValidaNombre))
 
         Set Field_Label_Long Field Jugador.Apellido to "Apellido"
         Set Field_Label_Short Field Jugador.Apellido to "Apellido"
         Set Field_Option Field Jugador.Apellido DD_REQUIRED to True
+        Set Field_Option Field Jugador.Apellido DD_COMMIT to True
+        Set Field_Validate_msg Field Jugador.Apellido to (RefFunc(ValidaNombre))
 
         Set Field_Label_Long Field Jugador.Nacionalidad to "Nacionalidad"
         Set Field_Label_Short Field Jugador.Nacionalidad to "Nacionalidad"
+        Set Field_Class_Name Field Jugador.Nacionalidad to "Combo"
+        Set Field_Value_Table Field Jugador.Nacionalidad to oNacionalidad_VT
+        Set Status_Help Field Jugador.Nacionalidad to "Elige la nacionalidad de la lista"
 
         Set Field_Label_Long Field Jugador.EquipoID to "Equipo"
         Set Field_Label_Short Field Jugador.EquipoID to "Equipo"
@@ -46,6 +54,7 @@ Class cJugadorDataDictionary is a DataDictionary
 
     Procedure Field_Defaults
         Forward Send Field_Defaults
+        Set Field_Changed_Value Field Jugador.Nacionalidad to "Español"
     End_Procedure
 
 End_Class
