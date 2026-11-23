@@ -36,7 +36,7 @@ de Equipo tiene `Constrain_File` = Liga, para que su lista sólo muestre los equ
 
 ## 3. Tablas de validación (desplegables)
 
-`DDSrc/FutbolValidationTables.pkg` define dos `ValidationTable`: **nacionalidades** y **países**. Con
+`DDSrc/FutbolValidationTables.pkg` define dos `CodeValidationTable` que leen sus valores de las tablas de códigos de DataFlex (`CodeType`/`CodeMast`, tipos `NACION` y `PAIS`; ver [SPRINT4.md](SPRINT4.md)): **nacionalidades** y **países**. Con
 `Field_Value_Table` el DD sólo acepta valores de la lista y, con `Field_Class_Name "Combo"`, Studio y la web los
 pintan como desplegable. En las vistas basta con usar un `cWebCombo`: se rellena solo desde el DD.
 
