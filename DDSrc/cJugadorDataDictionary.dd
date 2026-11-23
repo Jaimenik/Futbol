@@ -31,11 +31,13 @@ Class cJugadorDataDictionary is a cFutbolDataDictionary
         Set Field_Label_Long Field Jugador.Nombre to "Nombre"
         Set Field_Label_Short Field Jugador.Nombre to "Nombre"
         Set Field_Option Field Jugador.Nombre DD_REQUIRED to True
+        Set Field_Option Field Jugador.Nombre DD_COMMIT to True
         Set Field_Validate_msg Field Jugador.Nombre to (RefFunc(ValidaNombre))
 
         Set Field_Label_Long Field Jugador.Apellido to "Apellido"
         Set Field_Label_Short Field Jugador.Apellido to "Apellido"
         Set Field_Option Field Jugador.Apellido DD_REQUIRED to True
+        Set Field_Option Field Jugador.Apellido DD_COMMIT to True
         Set Field_Validate_msg Field Jugador.Apellido to (RefFunc(ValidaNombre))
 
         Set Field_Label_Long Field Jugador.Nacionalidad to "Nacionalidad"

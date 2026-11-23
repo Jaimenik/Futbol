@@ -26,6 +26,7 @@ Class cLigaDataDictionary is a cFutbolDataDictionary
         Set Field_Label_Long Field Liga.Nombre to "Nombre"
         Set Field_Label_Short Field Liga.Nombre to "Nombre"
         Set Field_Option Field Liga.Nombre DD_REQUIRED to True
+        Set Field_Option Field Liga.Nombre DD_COMMIT to True
 
         Set Field_Label_Long Field Liga.Pais to "País"
         Set Field_Label_Short Field Liga.Pais to "País"
@@ -41,6 +42,7 @@ Class cLigaDataDictionary is a cFutbolDataDictionary
         Set Field_Label_Long Field Liga.EquiposMax to "Máximo de equipos"
         Set Field_Label_Short Field Liga.EquiposMax to "Máx."
         Set Field_Value_Range Field Liga.EquiposMax to 1 99
+        Set Field_Option Field Liga.EquiposMax DD_REQUIRED to True
 
         Set piPrimaryIndex to 1
     End_Procedure
