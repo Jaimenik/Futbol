@@ -83,6 +83,8 @@ Object oZoomEntrenador is a cWebView
         WebSet pbRender of oEditBtn to NavigateData.bReadOnly
         WebSet pbRender of oSaveBtn to (not(NavigateData.bReadOnly))
         WebSet pbRender of oDeleteBtn to bHasRecord
+        // sólo se puede despedir a un entrenador que tiene equipo
+        WebSet pbRender of oDespedirBtn to (bHasRecord and HasRecord(oEquipo_DD))
     End_Procedure
 
     Object oActionGroup is a cWebMenuGroup
@@ -114,6 +116,28 @@ Object oZoomEntrenador is a cWebView
 
             Procedure OnClick
                 Send Request_Delete
+            End_Procedure
+        End_Object
+
+        // Null: dejar al entrenador sin equipo (EquipoID = NULL). Funciona porque el
+        // DD de Entrenador tiene ParentNullAllowed para Equipo: al vaciar el DDO del
+        // padre y guardar el hijo, el campo de la relación se guarda como NULL.
+        Object oDespedirBtn is a cWebMenuItem
+            Set psCaption to "Despedir"
+            Set psCSSClass to "WebClearMenuItem"
+
+            Procedure ConfirmarDespido Integer eAnswer
+                If (eAnswer = cmYes) Begin
+                    Send Clear of oEquipo_DD
+                    Set Changed_State of oEntrenador_DD to True
+                    Send Request_Save
+                End
+            End_Procedure
+            WebPublishProcedure ConfirmarDespido
+
+            Procedure OnClick
+                Send ShowYesNo of oWebApp (Self) (RefProc(ConfirmarDespido)) ;
+                    ("¿Despedir a " + Trim(Entrenador.Nombre) * Trim(Entrenador.Apellido) + " de " + Trim(Equipo.Nombre) + "?") "Despedir entrenador"
             End_Procedure
         End_Object
 
